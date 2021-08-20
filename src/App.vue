@@ -1,28 +1,42 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <h1>Crea una nueva tarea</h1>
+
+    <label>Tarea </label>
+    <input v-model="nuevaTarea" placeholder="Ingresa una nueva tarea">
+    <button @click="agregarTareas">Crear</button>
+    <div>
+    <List :tareas="tareas" @eliminarTarea="eliminarTarea"/>
+    </div>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import List from './components/List.vue'
 
 export default {
   name: 'App',
-  components: {
-    HelloWorld
-  }
-}
+  components: { List },
+  data: () => ({
+    nuevaTarea: "",
+    tareas: [],
+  }),
+
+  methods: {
+    agregarTareas: function(){
+      this.tareas.push(this.nuevaTarea)
+      this.nuevaTarea = ""
+    },
+    eliminarTarea: function($index) {
+      this.tareas.splice($index, 1)
+    }
+  },
+};
 </script>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+<style scoped>
+  #app {
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+  }
 </style>
